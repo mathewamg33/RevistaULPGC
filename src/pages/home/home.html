@@ -1,18 +1,21 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="ulpgc">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>ULPGC</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+<ion-content>
+  <ion-list>
+    <ion-item text-wrap *ngFor = "let n of news">
+      <h2 class="title">{{n.title}}</h2>
+      <div class="separator"></div>
+      <p>{{n.author }}</p>
+      <ion-thumbnail item-right *ngIf="n.image">
+        <img src="{{n.image}}">
+      </ion-thumbnail>
+    </ion-item>
+  </ion-list>
 </ion-content>

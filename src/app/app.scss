@@ -14,3 +14,14 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.logoUlpgc{
+    width: 50%;
+    margin-top: 10px;
+}
+.ulpgc{
+    background: linear-gradient(#002f67, #395d89);
+}
+
+.sections ion-label.label.label-md{
+    color: #002f67;
+}

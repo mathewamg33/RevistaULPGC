@@ -1,14 +1,35 @@
+import { DbApiService } from './../../provider/db-api.service';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  news: any[];
+  private allNews: any;
+  private sortByTime: any;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController) {
 
   }
 
+  ionViewDidLoad() {
+    let loader = this.loadingController.create({
+      content: 'Por favor espera...'
+    });
+    loader.present().then(() => {
+      //this.DbApiService.fireLogin();
+      this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        console.log(this.allNews); 
+        this.sortByTime = _.chain(this.allNews).sortBy('time').value();
+        this.news = this.sortByTime;
+        console.log(this.news);
+        loader.dismiss();
+      });
+    });
+  }
 }
