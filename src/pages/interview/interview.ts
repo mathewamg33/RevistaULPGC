@@ -4,13 +4,13 @@ import { NavController, LoadingController } from 'ionic-angular';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'page-sport',
-  templateUrl: 'sport.html'
+  selector: 'page-interview',
+  templateUrl: 'interview.html'
 })
-export class SportPage {
+export class InterviewPage {
   news: any[];
   private allNews: any;
-  private sportNews: any;
+  private interviewNews: any;
   private sortByWeight: any;
   importantNews: any;
 
@@ -26,9 +26,9 @@ export class SportPage {
       //this.DbApiService.fireLogin();
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
-        this.sportNews = _.chain(this.allNews).filter(['section', 'Sports']).value();
-        this.sortByWeight = _.chain(this.sportNews).sortBy('weight').value();
-        this.news = this.sportNews;
+        this.interviewNews = _.chain(this.allNews).filter(['section', 'Interviews']).value();
+        this.sortByWeight = _.chain(this.interviewNews).sortBy('weight').value();
+        this.news = this.interviewNews;
         this.importantNews = this.sortByWeight[0];
         loader.dismiss();
         console.log(this.importantNews);

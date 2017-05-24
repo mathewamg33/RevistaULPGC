@@ -11,6 +11,8 @@ export class HomePage {
   news: any[];
   private allNews: any;
   private sortByTime: any;
+  private sortByWeight: any;
+  importantNews: any;
 
   constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController) {
 
@@ -24,12 +26,13 @@ export class HomePage {
       //this.DbApiService.fireLogin();
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
-        console.log(this.allNews); 
         this.sortByTime = _.chain(this.allNews).sortBy('time').value();
+        this.sortByWeight = _.chain(this.allNews).sortBy('weight').value();
         this.news = this.sortByTime;
-        console.log(this.news);
+        this.importantNews = this.sortByWeight[0];
         loader.dismiss();
       });
     });
+    
   }
 }

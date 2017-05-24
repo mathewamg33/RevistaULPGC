@@ -6,6 +6,9 @@ import { DbApiService } from './../provider/db-api.service';
 
 import { HomePage } from '../pages/home/home';
 import { SportPage } from '../pages/sport/sport';
+import { CulturePage } from "../pages/culture/culture";
+import { SocietyPage } from "../pages/society/society";
+import { InterviewPage } from "../pages/interview/interview";
 
 @Component({
   templateUrl: 'app.html'
@@ -23,9 +26,9 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Deportes', component: SportPage },
-      { title: 'Entrevistas', component: SportPage },
-      { title: 'Cultura', component: SportPage },
-      { title: 'Sociedad', component: SportPage }
+      { title: 'Cultura', component: CulturePage },
+      { title: 'Sociedad', component: SocietyPage },
+      { title: 'Entrevistas', component: InterviewPage }
     ];
 
   }

@@ -10,6 +10,9 @@ import { HomePage } from '../pages/home/home';
 import { SportPage } from '../pages/sport/sport';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CulturePage } from "../pages/culture/culture";
+import { SocietyPage } from "../pages/society/society";
+import { InterviewPage } from "../pages/interview/interview";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA3GkJ2dwJeDbycrDPSoXUUxJf96s_4RUc",
@@ -25,7 +28,10 @@ export const firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
-    SportPage
+    SportPage,
+    CulturePage,
+    SocietyPage,
+    InterviewPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,10 @@ export const firebaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    SportPage
+    SportPage,
+    CulturePage,
+    SocietyPage,
+    InterviewPage
   ],
   providers: [
     StatusBar,

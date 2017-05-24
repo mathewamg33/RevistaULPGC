@@ -1,23 +1,33 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="ulpgc">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Deportes</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+  <ion-card class="importantNews" *ngIf="importantNews">
+    <img src="{{importantNews.image}}"/>
+    <ion-card-content>
+      <ion-card-title>
+          {{ importantNews.title }}
+        </ion-card-title>
+      <div class="separator"></div>
+      <p>{{ importantNews.author }}</p>
+    </ion-card-content>
+  </ion-card>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-left></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-right>
-        {{item.note}}
-      </div>
-    </button>
+    <ng-container *ngFor = "let n of news">
+      <ion-item text-wrap *ngIf= "importantNews != n">
+          <h2 class="title">{{n.title}}</h2>
+          <div class="separator"></div>
+          <p>{{n.author }}</p>
+          <ion-thumbnail item-right *ngIf="n.image">
+            <img src="{{n.image}}">
+          </ion-thumbnail>
+      </ion-item>
+    </ng-container>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
 </ion-content>
