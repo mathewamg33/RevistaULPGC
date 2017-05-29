@@ -5,13 +5,13 @@ import * as _ from 'lodash';
 import { ShowNewsPage } from "../show-news/show-news";
 
 @Component({
-  selector: 'page-interview',
-  templateUrl: 'interview.html'
+  selector: 'page-studies',
+  templateUrl: 'studies.html'
 })
-export class InterviewPage {
+export class StudiesPage {
   news: any[];
   private allNews: any;
-  private interviewNews: any;
+  private studiesNews: any;
   private sortByWeight: any;
   importantNews: any;
 
@@ -27,18 +27,18 @@ export class InterviewPage {
       //this.DbApiService.fireLogin();
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
-        this.interviewNews = _.chain(this.allNews).filter(['section', 'Entrevistas']).value();
-        this.sortByWeight = _.chain(this.interviewNews).sortBy('weight').value();
-        this.news = this.interviewNews;
-        this.importantNews = this.sortByWeight[0];
+        this.studiesNews = _.chain(this.allNews).filter(['section', 'Estudios']).value();
+        this.sortByWeight = _.chain(this.studiesNews).sortBy('weight').value();
+        this.news = this.studiesNews;
+        this.importantNews = this.sortByWeight[this.sortByWeight.length-1];
         loader.dismiss();
         console.log(this.importantNews);
-      });
+      }); 
     });
   }
 
   showNews($event, news){
     this.navCtrl.push(ShowNewsPage, news);
   }
-  
+
 }

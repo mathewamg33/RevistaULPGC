@@ -9,6 +9,11 @@ import { SportPage } from '../pages/sport/sport';
 import { CulturePage } from "../pages/culture/culture";
 import { SocietyPage } from "../pages/society/society";
 import { InterviewPage } from "../pages/interview/interview";
+import { ConfigPage } from "../pages/config/config";
+import { EntrepreneurshipPage } from "../pages/entrepreneurship/entrepreneurship";
+import { StudiesPage } from "../pages/studies/studies";
+import { InternationalizationPage } from "../pages/internationalization/internationalization";
+import { InvetigationPage } from "../pages/invetigation/invetigation";
 
 @Component({
   templateUrl: 'app.html'
@@ -23,12 +28,16 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private DbApiService: DbApiService) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Deportes', component: SportPage },
       { title: 'Cultura', component: CulturePage },
-      { title: 'Sociedad', component: SocietyPage },
-      { title: 'Entrevistas', component: InterviewPage }
+      { title: 'Deportes', component: SportPage },
+      { title: 'Emprendimiento', component: EntrepreneurshipPage },
+      { title: 'Entrevistas', component: InterviewPage },
+      { title: 'Estudios', component:  StudiesPage},
+      { title: 'Internacionalización', component: InternationalizationPage },
+      { title: 'Investigación', component: InvetigationPage },
+      { title: 'Sociedad', component: SocietyPage }
+      //orden alfabetico
     ];
 
   }
@@ -46,6 +55,10 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  openConfigPage(){
+    this.nav.setRoot(ConfigPage);
   }
 
   openHomePage() {

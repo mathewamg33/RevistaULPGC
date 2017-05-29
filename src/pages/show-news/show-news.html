@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar color="ulpgc">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{news.section}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="news" *ngIf="news">
+    <img *ngIf="news.image" src="{{news.image}}"/>
+    <ion-card-content>
+      <ion-card-title>
+          {{ news.title }}
+        </ion-card-title>
+      <div class="separator"></div>
+      <div class="data">
+        <p>{{ news.author }} | {{ news.time | date }}</p>
+      </div>
+      <div class="newsContent">
+        <p> {{ news.content }} </p>
+      </div>
+      <div class="separatorRelatedNews">
+        <h2 class="relatedNews">Noticias Relacionadas</h2>
+      </div>
+      <ion-list>
+        <ng-container *ngFor = "let rn of relatedNews">
+          <ion-item *ngIf= "news.content != rn.content" text-wrap class="itemRelatedNews" (click)="showNews($event, rn)">
+              <h2 class="newsTitle">{{rn.title}}</h2>
+              <div class="separator"></div>
+              <p>{{rn.author }}</p>
+              <ion-thumbnail item-right *ngIf="rn.image">
+                <img src="{{rn.image}}">
+              </ion-thumbnail>
+          </ion-item>
+        </ng-container>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

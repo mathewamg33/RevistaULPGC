@@ -2,7 +2,7 @@
   <ion-header>
      
     <div class="ulpgc">
-      <ion-title><img class="logoUlpgc" src="/assets/images/logo.png" alt="logo-ulpgc"></ion-title>
+      <ion-title><img class="logoUlpgc" src="https://firebasestorage.googleapis.com/v0/b/revistauplgc.appspot.com/o/logo.png?alt=media&token=7692f24c-ecf7-4af7-afca-fb87b77c8f2e" alt="logo-ulpgc"></ion-title>
     </div>
     
   </ion-header>
@@ -12,12 +12,18 @@
       <button color="ulpgc" menuClose ion-item no-lines (click)="openHomePage()">
         Portada
       </button>
-      <button class="sections" color="ulpgc3" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
+      <button class="sections" color="ulpgc3" menuClose ion-item *ngFor="let page of pages" (click)="openPage(page)">
+        {{page.title}}
       </button>
     </ion-list>
   </ion-content>
-
+  <ion-footer>
+    
+      <button ion-item class="sections" color="ulpgc3" menuClose (click)="openConfigPage()">Configuración <ion-icon item-left color="ulpgc" name="settings"></ion-icon></button>
+      
+      
+    
+  </ion-footer>
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

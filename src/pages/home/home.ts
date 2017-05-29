@@ -2,6 +2,7 @@ import { DbApiService } from './../../provider/db-api.service';
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import * as _ from 'lodash';
+import { ShowNewsPage } from "../show-news/show-news";
 
 @Component({
   selector: 'page-home',
@@ -29,10 +30,13 @@ export class HomePage {
         this.sortByTime = _.chain(this.allNews).sortBy('time').value();
         this.sortByWeight = _.chain(this.allNews).sortBy('weight').value();
         this.news = this.sortByTime;
-        this.importantNews = this.sortByWeight[0];
+        this.importantNews = this.sortByWeight[this.sortByWeight.length-1];
         loader.dismiss();
       });
     });
-    
+  }
+
+  showNews($event, news){
+    this.navCtrl.push(ShowNewsPage, news);
   }
 }

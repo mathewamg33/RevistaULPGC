@@ -1,0 +1,34 @@
+page-show-news {
+    .news{
+        margin: 0px 0px 0px 0px !important;
+        width: 100%;
+    }
+    ion-card-content{
+        background-color: #f5f4f4;
+    }
+    ion-list button{
+        background-color: #f5f4f4;
+        
+    }
+    .data{
+        margin-bottom: 2em;
+    }
+
+    .newsContent{
+        margin-bottom: 1.5em;
+    }
+
+    .separatorRelatedNews{
+        border-top: solid #395d89 2px;
+        border-bottom: solid rgba(140, 140, 140, 0.5) 0.5px;
+        width: 100%;
+        margin: 0 0 15px 0;
+    }
+    .relatedNews{
+        margin: 30px 0 10px 0;
+    }
+    .itemRelatedNews{
+        background-color: #f5f4f4;
+        border-bottom: solid rgba(140, 140, 140, 0.5) 0.5px;
+    }
+}

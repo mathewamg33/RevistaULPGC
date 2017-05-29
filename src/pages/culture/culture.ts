@@ -2,6 +2,7 @@ import { DbApiService } from './../../provider/db-api.service';
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import * as _ from 'lodash';
+import { ShowNewsPage } from "../show-news/show-news";
 
 @Component({
   selector: 'page-culture',
@@ -26,7 +27,7 @@ export class CulturePage {
       //this.DbApiService.fireLogin();
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
-        this.cultureNews = _.chain(this.allNews).filter(['section', 'Culture']).value();
+        this.cultureNews = _.chain(this.allNews).filter(['section', 'Cultura']).value();
         this.sortByWeight = _.chain(this.cultureNews).sortBy('weight').value();
         this.news = this.cultureNews;
         this.importantNews = this.sortByWeight[0];
@@ -35,4 +36,9 @@ export class CulturePage {
       });
     });
   }
+
+  showNews($event, news){
+    this.navCtrl.push(ShowNewsPage, news);
+  }
+  
 }

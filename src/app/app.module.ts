@@ -13,6 +13,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { CulturePage } from "../pages/culture/culture";
 import { SocietyPage } from "../pages/society/society";
 import { InterviewPage } from "../pages/interview/interview";
+import { ShowNewsPage } from "../pages/show-news/show-news";
+import { ConfigPage } from "../pages/config/config";
+import { EntrepreneurshipPage } from "../pages/entrepreneurship/entrepreneurship";
+import { StudiesPage } from '../pages/studies/studies';
+import { InternationalizationPage } from '../pages/internationalization/internationalization';
+import { InvetigationPage } from "../pages/invetigation/invetigation";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA3GkJ2dwJeDbycrDPSoXUUxJf96s_4RUc",
@@ -31,7 +37,14 @@ export const firebaseConfig = {
     SportPage,
     CulturePage,
     SocietyPage,
-    InterviewPage
+    InterviewPage,
+    ShowNewsPage,
+    ConfigPage,
+    EntrepreneurshipPage,
+    StudiesPage,
+    InternationalizationPage,
+    InvetigationPage
+
   ],
   imports: [
     BrowserModule,
@@ -47,7 +60,14 @@ export const firebaseConfig = {
     SportPage,
     CulturePage,
     SocietyPage,
-    InterviewPage
+    InterviewPage,
+    ShowNewsPage,
+    ConfigPage,
+    EntrepreneurshipPage,
+    StudiesPage,
+    InternationalizationPage,
+    InvetigationPage
+    
   ],
   providers: [
     StatusBar,
