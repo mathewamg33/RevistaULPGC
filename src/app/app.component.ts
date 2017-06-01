@@ -1,3 +1,4 @@
+import { AdminPage } from './../pages/admin/admin';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -14,6 +15,7 @@ import { EntrepreneurshipPage } from "../pages/entrepreneurship/entrepreneurship
 import { StudiesPage } from "../pages/studies/studies";
 import { InternationalizationPage } from "../pages/internationalization/internationalization";
 import { InvetigationPage } from "../pages/invetigation/invetigation";
+import { LoginPage } from "../pages/login/login";
 
 @Component({
   templateUrl: 'app.html'
@@ -55,6 +57,12 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+  
+  openLoginPage() {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(LoginPage);
   }
 
   openConfigPage(){

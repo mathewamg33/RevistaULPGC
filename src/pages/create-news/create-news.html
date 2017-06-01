@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar color="ulpgc">
+    <ion-row>
+      <ion-col col-8 offset-1>
+        <ion-title text-center class="nav-title">Crear Noticia</ion-title>
+      </ion-col>
+      <ion-col col-1 offset-1>
+        <img class="logoUlpgc" src="/assets/images/logo.png" alt="">
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="FireCreateNews()" #addNewsForm="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label fixed>Título</ion-label>
+        <ion-input type="text" [(ngModel)]="news.title" name="title" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Autor</ion-label>
+        <ion-input type="text" [(ngModel)]="news.author" name="author" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Seccion</ion-label>
+        <ion-select [(ngModel)]="news.section" name="section" required>
+          <ion-option value="Cultura" selected="true">Cultura</ion-option>
+          <ion-option value="Deportes" selected="true">Deportes</ion-option>
+          <ion-option value="Emprendimiento" selected="true">Emprendimiento</ion-option>
+          <ion-option value="Entrevistas" selected="true">Entrevistas</ion-option>
+          <ion-option value="Estudios" selected="true">Estudios</ion-option>
+          <ion-option value="Internacionalización" selected="true">Internacionalización</ion-option>
+          <ion-option value="Investigación" selected="true">Investigación</ion-option>
+          <ion-option value="Sociedad" selected="true">Sociedad</ion-option>
+        </ion-select>
+      </ion-item>
+
+       <ion-item>
+        <ion-label fixed>Contenido</ion-label>
+        <ion-textarea placeholder="Enter a description" [(ngModel)]="news.content" name="content" required></ion-textarea>
+      </ion-item>
+      
+
+      <button ion-button block [disabled]="!addNewsForm.form.valid">Crear</button>
+
+    </ion-list>
+  </form>
+
+</ion-content>

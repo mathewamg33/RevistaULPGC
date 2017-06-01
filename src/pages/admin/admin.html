@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-navbar color="ulpgc">
+    <ion-row>
+      <ion-col col-1 offset-1>
+        <img class="logoUlpgc" src="/assets/images/logo.png" alt="">
+      </ion-col>
+      <ion-col col-8>
+        <ion-title text-center class="nav-title">Noticias</ion-title>
+      </ion-col>
+      <ion-col col-2>
+        <button ion-button class="log-out" clear icon-left (click)="logout()">
+          <ion-icon name="log-out"></ion-icon>
+          Cerrar Sesión
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-lg-3>
+        <ion-searchbar (ionInput)="filterByTitle($event)" placeholder="Buscar por Título"></ion-searchbar>
+      </ion-col>
+      <ion-col col-lg-3>
+       <ion-item>
+          <ion-label>Sección</ion-label>
+          <ion-select [(ngModel)]="searchTerm" [formControl]="searchControl">
+            <ion-option>Todos</ion-option>
+            <ion-option>Cultura</ion-option>
+            <ion-option>Deportes</ion-option>
+            <ion-option>Emprendimiento</ion-option>
+            <ion-option>Entrevistas</ion-option>
+            <ion-option>Estudios</ion-option>
+            <ion-option>Internacionalización</ion-option>
+            <ion-option>Investigación</ion-option>
+            <ion-option>Sociedad</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-lg-2 offset-4>
+       <button ion-button color="ulpgc" (click)="goCreateNews()">Añadir Noticia</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="table-news">
+    <ion-row color="ulpgc" class="header">
+      <ion-col col-4><ion-title text-center>Título</ion-title></ion-col>
+      <ion-col col-2><ion-title>Sección</ion-title></ion-col>
+      <ion-col col-2><ion-title>Fecha</ion-title></ion-col>
+      <ion-col col-2><ion-title>Autor</ion-title></ion-col>
+      <ion-col col-2><ion-title>Acciones</ion-title></ion-col>
+    </ion-row>
+    <ion-row class="news" *ngFor="let n of news">
+      <ion-col col-4>{{n.title}}</ion-col>
+      <ion-col col-2>{{n.section}}</ion-col>
+      <ion-col col-2>{{n.time | date}}</ion-col>
+      <ion-col col-2>{{n.author}}</ion-col>
+      <ion-col col-2>
+        <button ion-button (click)="goEditNews()" small>Editar</button>
+        <button ion-button color="danger" (click)="deleteNews(n)" small>Eliminar</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

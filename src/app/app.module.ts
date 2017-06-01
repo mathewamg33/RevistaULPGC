@@ -1,3 +1,5 @@
+import { CreateNewsPage } from './../pages/create-news/create-news';
+import { AdminPage } from './../pages/admin/admin';
 import { DbApiService } from './../provider/db-api.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -19,6 +21,7 @@ import { EntrepreneurshipPage } from "../pages/entrepreneurship/entrepreneurship
 import { StudiesPage } from '../pages/studies/studies';
 import { InternationalizationPage } from '../pages/internationalization/internationalization';
 import { InvetigationPage } from "../pages/invetigation/invetigation";
+import { LoginPage } from "../pages/login/login";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA3GkJ2dwJeDbycrDPSoXUUxJf96s_4RUc",
@@ -43,7 +46,10 @@ export const firebaseConfig = {
     EntrepreneurshipPage,
     StudiesPage,
     InternationalizationPage,
-    InvetigationPage
+    InvetigationPage,
+    LoginPage,
+    AdminPage,
+    CreateNewsPage
 
   ],
   imports: [
@@ -66,7 +72,10 @@ export const firebaseConfig = {
     EntrepreneurshipPage,
     StudiesPage,
     InternationalizationPage,
-    InvetigationPage
+    InvetigationPage,
+    LoginPage,
+    AdminPage,
+    CreateNewsPage
     
   ],
   providers: [
