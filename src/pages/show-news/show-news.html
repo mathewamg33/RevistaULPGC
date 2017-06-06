@@ -16,7 +16,7 @@
         </ion-card-title>
       <div class="separator"></div>
       <div class="data">
-        <p>{{ news.author }} | {{ news.time | date }}</p>
+        <p>{{ news.author }} | {{ news.time | date:'HH:mm' }} - {{ news.time | date:'dd/MM/yy' }}</p>
       </div>
       <div class="newsContent">
         <p> {{ news.content }} </p>

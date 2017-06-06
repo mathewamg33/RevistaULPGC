@@ -6,4 +6,15 @@ page-create-news {
     .logoUlpgc{
         width: 100%;
     }
+
+    ion-label{
+        color: black !important;
+    }
+    .hidden-input{
+        opacity: 0;
+        height: 50px;
+        position: absolute;
+        z-index: 1;
+        cursor: pointer;
+    }
 }

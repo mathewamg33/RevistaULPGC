@@ -1,3 +1,4 @@
+import { CreateNewsPage } from './../pages/create-news/create-news';
 import { AdminPage } from './../pages/admin/admin';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';

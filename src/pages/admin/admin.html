@@ -55,7 +55,7 @@
     <ion-row class="news" *ngFor="let n of news">
       <ion-col col-4>{{n.title}}</ion-col>
       <ion-col col-2>{{n.section}}</ion-col>
-      <ion-col col-2>{{n.time | date}}</ion-col>
+      <ion-col col-2>{{ n.time | date:'HH:mm' }} - {{ n.time | date:'dd/MM/yy' }} </ion-col>
       <ion-col col-2>{{n.author}}</ion-col>
       <ion-col col-2>
         <button ion-button (click)="goEditNews()" small>Editar</button>
