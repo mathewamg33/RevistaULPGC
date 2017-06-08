@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { FormControl } from "@angular/forms";
 import 'rxjs/add/operator/debounceTime';
 import { CreateNewsPage } from "../create-news/create-news";
+import { EditNewsPage } from "../edit-news/edit-news";
 
 @Component({
   selector: 'page-admin',
@@ -70,12 +71,13 @@ export class AdminPage {
       })
     }
   }
+  
   goCreateNews(){
     this.navCtrl.push(CreateNewsPage);
   }
 
-  goEditNews(){
-   
+  goEditNews(news){
+   this.navCtrl.push(EditNewsPage, news);
   }
 
   deleteNews(news){

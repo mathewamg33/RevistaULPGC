@@ -1,3 +1,4 @@
+import { PopoverPage } from './../pages/popover/popover';
 import { CreateNewsPage } from './../pages/create-news/create-news';
 import { AdminPage } from './../pages/admin/admin';
 import { DbApiService } from './../provider/db-api.service';
@@ -22,6 +23,7 @@ import { StudiesPage } from '../pages/studies/studies';
 import { InternationalizationPage } from '../pages/internationalization/internationalization';
 import { InvetigationPage } from "../pages/invetigation/invetigation";
 import { LoginPage } from "../pages/login/login";
+import { EditNewsPage } from "../pages/edit-news/edit-news";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA3GkJ2dwJeDbycrDPSoXUUxJf96s_4RUc",
@@ -49,7 +51,9 @@ export const firebaseConfig = {
     InvetigationPage,
     LoginPage,
     AdminPage,
-    CreateNewsPage
+    CreateNewsPage,
+    EditNewsPage,
+    PopoverPage
 
   ],
   imports: [
@@ -75,7 +79,9 @@ export const firebaseConfig = {
     InvetigationPage,
     LoginPage,
     AdminPage,
-    CreateNewsPage
+    CreateNewsPage,
+    EditNewsPage,
+    PopoverPage
     
   ],
   providers: [

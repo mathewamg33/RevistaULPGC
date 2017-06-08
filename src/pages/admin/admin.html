@@ -58,7 +58,7 @@
       <ion-col col-2>{{ n.time | date:'HH:mm' }} - {{ n.time | date:'dd/MM/yy' }} </ion-col>
       <ion-col col-2>{{n.author}}</ion-col>
       <ion-col col-2>
-        <button ion-button (click)="goEditNews()" small>Editar</button>
+        <button ion-button (click)="goEditNews(n)" small>Editar</button>
         <button ion-button color="danger" (click)="deleteNews(n)" small>Eliminar</button>
       </ion-col>
     </ion-row>

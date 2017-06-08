@@ -17,7 +17,7 @@ export class CreateNewsPage {
     weight: 0,
     time: 0
   }
-  image;
+  image: any = null;
   
   constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController, private toastController: ToastController) {
   }
@@ -35,7 +35,8 @@ export class CreateNewsPage {
   //   ],
   //   toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons'
   //   });
-  }
+}
+
   createImage(ev: any){
     this.image = ev.target.files[0];
   }

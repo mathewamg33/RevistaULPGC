@@ -1,7 +1,8 @@
 import { DbApiService } from './../../provider/db-api.service';
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { NavController, NavParams, PopoverController } from 'ionic-angular';
 import * as _ from 'lodash';
+import { PopoverPage } from "../popover/popover";
 
 
 @Component({
@@ -9,13 +10,15 @@ import * as _ from 'lodash';
   templateUrl: 'show-news.html'
 })
 export class ShowNewsPage {
+  @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
+
   news: any;
   relatedNews: any[];
   private allNews: any;
   private sectionNews: any;  
   private sortByWeight: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private DbApiService: DbApiService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private DbApiService: DbApiService, private popoverCtrl: PopoverController) {
     this.news = this.navParams.data;
   }
 
@@ -31,5 +34,16 @@ export class ShowNewsPage {
   }
   showNews($event, news){
     this.navCtrl.push(ShowNewsPage, news);
+  }
+  
+  presentPopover(ev) {
+
+    let popover = this.popoverCtrl.create(PopoverPage, {
+      textEle: this.text.nativeElement
+    });
+
+    popover.present({
+      ev: ev
+    });
   }
 }

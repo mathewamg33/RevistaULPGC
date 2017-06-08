@@ -1,0 +1,54 @@
+.popover-page {
+  
+  ion-row,
+  ion-col {
+    padding: 0;
+  }
+
+  .text-button {
+    padding-left: 0;
+    text-align: center;
+    min-height: 20px;
+    line-height: 18px;
+  }
+
+  .text-button .item-inner {
+    padding-right: 0 !important;
+  }
+
+  .smaller-text {
+    font-size: 10px !important;
+  }
+
+  .small-text {
+    font-size: 12px !important;
+  }
+
+  .large-text {
+    font-size: 16px !important;
+  }
+
+  .text-arial {
+    font-family: "Arial, sans-serif";
+  }
+
+  .text-courier {
+    font-family: "Courier, monospace";
+  }
+
+  .text-helvetica {
+    font-family: "Helvetica, sans-serif";
+  }
+
+  .text-times-new-roman {
+    font-family: "Times New Roman, serif";
+  }
+
+  .text-verdana {
+    font-family: "Verdana, sans-serif";
+  }
+
+  .text-seravek {
+    font-family: "Seravek";
+  }
+}
