@@ -2,7 +2,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FirebaseListObservable, AngularFireDatabase,  } from 'angularfire2/database';
 import { Platform } from 'ionic-angular';
 import { Injectable } from "@angular/core";
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 
@@ -10,16 +10,28 @@ import firebase from 'firebase';
 export class DbApiService {
   news: FirebaseListObservable<any[]>;
   auth: any;
-  
+  allNews: any;
 
   constructor(private af: AngularFireDatabase, public afAuth: AngularFireAuth, private platform: Platform) {
-    console.log(this.afAuth); 
   }
 
 
   getFireNews(): FirebaseListObservable<any[]> {
     this.news = this.af.list('/news');
     return this.news;
+  }
+
+  cover(news){
+    if(news.coverPage === true){
+      this.getFireNews().take(1).subscribe(resp => {
+        this.allNews = resp;
+        for (let n of this.allNews){
+            firebase.database().ref('news/'+ n.$key).update({
+              coverPage: false
+            });
+        }
+      });
+    }
   }
 
   loginWithEmail(email, password) {
@@ -34,7 +46,6 @@ export class DbApiService {
         } else {
           alert(errorMessage);
         }
-        console.log(error);
       });
     });
   }
@@ -44,9 +55,17 @@ export class DbApiService {
   }
   
   fireCreateNews(news, image) {
+    this.cover(news);
     if(image == null){
-      firebase.database().ref('news/'+ news.$key).push({
-            title: news.title, section: news.section, author: news.author, content: news.content, weight: news.weight, time: news.time, image: ""
+      firebase.database().ref('news/').push({
+            title: news.title, 
+            section: news.section, 
+            author: news.author, 
+            content: news.content, 
+            time: news.time,  
+            coverPage: news.coverPage,
+            published: news.published, 
+            image: ""
         });
     }else{
       let storageRef = firebase.storage().ref();
@@ -81,9 +100,15 @@ export class DbApiService {
         // Upload completed successfully, now we can get the download URL
         let imageUrl = uploadTask.snapshot.downloadURL;
         //console.log("downloadURL: " + downloadURL);
-        console.log(imageUrl);
         firebase.database().ref('news/').push({
-            title: news.title, section: news.section, author: news.author, content: news.content, weight: news.weight, time: news.time, image: imageUrl
+            title: news.title,
+            section: news.section,
+            author: news.author,
+            content: news.content,
+            time: news.time,
+            coverPage: news.coverPage,
+            published: news.published, 
+            image: imageUrl
         });
       });
     }
@@ -91,10 +116,17 @@ export class DbApiService {
 
 
   fireEditNews(news, image) {
+    this.cover(news);
     if(image == null){
       firebase.database().ref('news/'+ news.$key).update({
-            title: news.title, section: news.section, author: news.author, content: news.content, weight: news.weight, time: news.time
-        });
+            title: news.title,
+            section: news.section,
+            author: news.author,
+            content: news.content,
+            time: news.time,
+            coverPage: news.coverPage,
+            published: news.published  
+      });
     }else{
 
       let storageRef = firebase.storage().ref();
@@ -132,13 +164,28 @@ export class DbApiService {
         console.log(news.$key);
         console.log(imageUrl);
         firebase.database().ref('news/'+ news.$key).update({
-            title: news.title, section: news.section, author: news.author, content: news.content, weight: news.weight, time: news.time, image: imageUrl
+            title: news.title,
+            section: news.section,
+            author: news.author,
+            content: news.content,
+            time: news.time,
+            coverPage: news.coverPage,
+            published: news.published,            
+            image: imageUrl
         });
       });
     }
   }
 
+  // firePublishNews(newsId, published){
+  //    firebase.database().ref('news/'+ newsId).update({
+  //           published: published,
+  //    })
+  // }
+
+
   fireDeleteNews(newsId){
     this.news.remove(newsId);
   }
 }
+

@@ -9,10 +9,11 @@ import { ShowNewsPage } from "../show-news/show-news";
   templateUrl: 'internationalization.html'
 })
 export class InternationalizationPage {
+  published: any;
   news: any[];
   private allNews: any;
   private internationalizationNews: any;
-  private sortByWeight: any;
+  private sortByTime: any;
   importantNews: any;
 
   constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController) {
@@ -28,11 +29,12 @@ export class InternationalizationPage {
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.internationalizationNews = _.chain(this.allNews).filter(['section', 'Internacionalización']).value();
-        this.sortByWeight = _.chain(this.internationalizationNews).sortBy('weight').value();
-        this.news = this.internationalizationNews;
-        this.importantNews = this.sortByWeight[this.sortByWeight.length-1];
+        this.sortByTime = _.chain(this.internationalizationNews).sortBy('time').value();
+        this.sortByTime = _.reverse(this.sortByTime);
+        this.published = _.chain(this.sortByTime).filter(['published', true]).value();
+        this.news = _.drop(this.published);
+        this.importantNews = _.head(this.published);
         loader.dismiss();
-        console.log(this.importantNews);
       });
     });
   }

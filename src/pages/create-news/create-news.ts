@@ -8,42 +8,30 @@ import firebase from 'firebase';
   templateUrl: 'create-news.html'
 })
 export class CreateNewsPage {
-  news: {title: string, section: string, author: string, content: string, fakeweight: string, weight: number, time: number} = {
-    title: '',
-    section: '',
-    author: '',
-    content: '',
-    fakeweight: '',
-    weight: 0,
-    time: 0
-  }
+  news: {
+    title: string, section: string, author: string, content: string, time: number, published: boolean, coverPage: boolean } = 
+    {
+      title: '',
+      section: '',
+      author: '',
+      content: '',
+      time: 0,
+      published: false,
+      coverPage: false
+    }
   image: any = null;
   
   constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController, private toastController: ToastController) {
   }
 
-  ionViewDidLoad() {
-  //  tinymce.init({
-  //   selector: '#createNews',
-  //   theme: 'modern',
-  //   width: 600,
-  //   height: 300,
-  //   plugins: [
-  //     'advlist autolink link lists charmap print preview hr anchor pagebreak spellchecker',
-  //     'searchreplace wordcount visualblocks visualchars code insertdatetime media nonbreaking',
-  //     'save table contextmenu directionality emoticons template paste textcolor'
-  //   ],
-  //   toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons'
-  //   });
-}
 
   createImage(ev: any){
     this.image = ev.target.files[0];
   }
 
   createNews(){
+    console.log(this.news.coverPage);
     this.news.time = new Date().getTime();
-    this.news.weight = parseInt(this.news.fakeweight);
     this.DbApiService.fireCreateNews(this.news, this.image);
       let toast = this.toastController.create({
         message: 'Noticia creada con éxito',

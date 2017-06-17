@@ -9,10 +9,11 @@ import { ShowNewsPage } from "../show-news/show-news";
   templateUrl: 'interview.html'
 })
 export class InterviewPage {
+  published: any;
   news: any[];
   private allNews: any;
   private interviewNews: any;
-  private sortByWeight: any;
+  private sortByTime: any;
   importantNews: any;
 
   constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController) {
@@ -28,11 +29,12 @@ export class InterviewPage {
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.interviewNews = _.chain(this.allNews).filter(['section', 'Entrevistas']).value();
-        this.sortByWeight = _.chain(this.interviewNews).sortBy('weight').value();
-        this.news = this.interviewNews;
-        this.importantNews = this.sortByWeight[0];
+        this.sortByTime = _.chain(this.interviewNews).sortBy('time').value();
+        this.sortByTime = _.reverse(this.sortByTime);
+        this.published = _.chain(this.sortByTime).filter(['published', true]).value();
+        this.news = _.drop(this.published);
+        this.importantNews = _.head(this.published);
         loader.dismiss();
-        console.log(this.importantNews);
       });
     });
   }

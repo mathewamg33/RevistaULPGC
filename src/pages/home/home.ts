@@ -12,8 +12,9 @@ export class HomePage {
   news: any[];
   private allNews: any;
   private sortByTime: any;
-  private sortByWeight: any;
-  importantNews: any;
+  private published: any;
+  private importantNews: any;
+  coverPage: any;
 
   constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController) {
 
@@ -28,9 +29,10 @@ export class HomePage {
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.sortByTime = _.chain(this.allNews).sortBy('time').value();
-        this.sortByWeight = _.chain(this.allNews).sortBy('weight').value();
-        this.news = this.sortByTime;
-        this.importantNews = this.sortByWeight[this.sortByWeight.length-1];
+        this.importantNews = _.chain(this.allNews).filter(['coverPage', true]).value();
+        this.published = _.chain(this.sortByTime).filter(['published', true]).value();
+        this.coverPage = this.importantNews[0];
+        this.news = this.published;
         loader.dismiss();
       });
     });

@@ -28,8 +28,6 @@ export class ShowNewsPage {
         this.sectionNews = _.chain(this.allNews).filter(['section',  this.news.section]).value();
         this.sortByWeight = _.chain(this.sectionNews).sortBy('weight').value();
         this.relatedNews = this.sortByWeight.slice(0, 4);
-        console.log(this.relatedNews[0]);
-        console.log(this.news);
     });
   }
   showNews($event, news){

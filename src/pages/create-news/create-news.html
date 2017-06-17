@@ -5,7 +5,7 @@
         <ion-title text-center class="nav-title">Crear Noticia</ion-title>
       </ion-col>
       <ion-col col-1 offset-1>
-        <img class="logoUlpgc" src="/assets/images/logo.png" alt="">
+        <img class="logoUlpgc" src="https://firebasestorage.googleapis.com/v0/b/revistauplgc.appspot.com/o/logo.png?alt=media&token=7692f24c-ecf7-4af7-afca-fb87b77c8f2e" alt="logo-ulpgc">
       </ion-col>
     </ion-row>
   </ion-navbar>
@@ -23,13 +23,13 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-lg-3>
+      <ion-col col-lg-4>
         <ion-item>
           <ion-label fixed>Autor</ion-label>
           <ion-input type="text" [(ngModel)]="news.author" name="author" required></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col col-lg-3>
+      <ion-col col-lg-3 offset-1>
         <ion-item>
           <ion-label fixed>Seccion</ion-label>
           <ion-select [(ngModel)]="news.section" name="section" required>
@@ -44,15 +44,9 @@
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col col-lg-3>
-        <ion-item>
-          <ion-label fixed>Peso</ion-label>
-          <ion-input type="number" [(ngModel)]="news.fakeweight" name="fakeweight" required></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col col-lg-3>
+      <ion-col col-lg-3 offset-1>
         <input type="file" (change)="createImage($event)" class="hidden-input"> 
-        <div ion-button clear block outline icon-left><ion-icon name="cloud-upload"></ion-icon>Añadir Imagen</div>        
+        <div ion-button full clear block outline icon-left><ion-icon name="cloud-upload"></ion-icon>Añadir Imagen</div>        
       </ion-col>
     </ion-row>
     <ion-row>
@@ -64,7 +58,19 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-lg-2 offset-10>
+      <ion-col col-lg-3 offset-5> 
+        <ion-item no-lines>
+          <ion-label>Noticia de portada</ion-label>
+          <ion-checkbox [(ngModel)]="news.coverPage" name="coverPage"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col col-lg-2> 
+        <ion-item no-lines>
+          <ion-label>Publicar</ion-label>
+          <ion-checkbox [(ngModel)]="news.published" name="published"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col col-lg-2 >
         <button ion-button block type="submit">Crear</button>
       </ion-col>
     </ion-row>

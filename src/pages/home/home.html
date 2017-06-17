@@ -8,20 +8,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="importantNews" *ngIf="importantNews" (click)="showNews($event, importantNews)">
-    <img *ngIf="importantNews.image" src="{{importantNews.image}}"/>
+  <ion-card class="importantNews" *ngIf="coverPage" (click)="showNews($event, coverPage)">
+    <img *ngIf="coverPage.image" src="{{coverPage.image}}"/>
     <ion-card-content>
-      <p>{{ importantNews.section }}</p>
+      <p>{{ coverPage.section }}</p>
       <ion-card-title>
-          {{ importantNews.title }}
+          {{ coverPage.title }}
         </ion-card-title>
       <div class="separator"></div>
-      <p>{{ importantNews.author }}</p>
+      <p>{{ coverPage.author }}</p>
     </ion-card-content>
   </ion-card>
   <ion-list>
     <ng-container *ngFor = "let n of news">
-      <ion-item text-wrap *ngIf= "importantNews != n" (click)="showNews($event, n)">
+      <ion-item text-wrap *ngIf= "coverPage != n" (click)="showNews($event, n)">
           <p>{{ n.section }}</p>
           <h2 class="newsTitle">{{n.title}}</h2>
           <div class="separator"></div>

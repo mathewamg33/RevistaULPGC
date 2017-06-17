@@ -9,10 +9,11 @@ import { ShowNewsPage } from "../show-news/show-news";
   templateUrl: 'society.html'
 })
 export class SocietyPage {
+    published: any;
   news: any[];
   private allNews: any;
   private societyNews: any;
-  private sortByWeight: any;
+  private sortByTime: any;
   importantNews: any;
 
   constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController) {
@@ -28,11 +29,12 @@ export class SocietyPage {
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.societyNews = _.chain(this.allNews).filter(['section', 'Sociedad']).value();
-        this.sortByWeight = _.chain(this.societyNews).sortBy('weight').value();
-        this.news = this.societyNews;
-        this.importantNews = this.sortByWeight[0];
+        this.sortByTime = _.chain(this.societyNews).sortBy('time').value();
+        this.sortByTime = _.reverse(this.sortByTime);
+        this.published = _.chain(this.sortByTime).filter(['published', true]).value();
+        this.news = _.drop(this.published);
+        this.importantNews = _.head(this.published);
         loader.dismiss();
-        console.log(this.importantNews);
       });
     });
   }

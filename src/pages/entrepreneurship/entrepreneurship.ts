@@ -9,10 +9,11 @@ import { ShowNewsPage } from "../show-news/show-news";
   templateUrl: 'entrepreneurship.html'
 })
 export class EntrepreneurshipPage {
+  published: any;
   news: any[];
   private allNews: any;
   private entrepreneurshipNews: any;
-  private sortByWeight: any;
+  private sortByTime: any;
   importantNews: any;
 
   constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController) {
@@ -28,9 +29,11 @@ export class EntrepreneurshipPage {
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.entrepreneurshipNews = _.chain(this.allNews).filter(['section', 'Emprendimiento']).value();
-        this.sortByWeight = _.chain(this.entrepreneurshipNews).sortBy('weight').value();
-        this.news = this.entrepreneurshipNews;
-        this.importantNews = this.sortByWeight[this.sortByWeight.length-1];
+        this.sortByTime = _.chain(this.entrepreneurshipNews).sortBy('time').value();
+        this.sortByTime = _.reverse(this.sortByTime);
+        this.published = _.chain(this.sortByTime).filter(['published', true]).value();
+        this.news = _.drop(this.published);
+        this.importantNews = _.head(this.published);
         loader.dismiss();
         console.log(this.importantNews);
       });

@@ -1,7 +1,7 @@
 <ion-list radio-group [(ngModel)]="fontFamily" (ionChange)="changeFontFamily()" class="popover-page">
     <ion-item-divider color="light">Ajustar Texto</ion-item-divider>
     <ion-item>
-      <ion-range min="12" max="17" snaps="true" [(ngModel)]="text" (ionChange)="changeFontSize()">
+      <ion-range min="12" max="22" snaps="true" [(ngModel)]="text" (ionChange)="changeFontSize()">
         <ion-label range-left class="small-text">A</ion-label>
         <ion-label range-right class="large-text">A</ion-label>
       </ion-range>
@@ -11,20 +11,20 @@
       <ion-label>Arial</ion-label>
       <ion-radio value="Arial"></ion-radio>
     </ion-item>
+    <ion-item class="text-casual">
+      <ion-label>Casual</ion-label>
+      <ion-radio value="Casual"></ion-radio>
+    </ion-item>
     <ion-item class="text-courier">
       <ion-label>Courier</ion-label>
       <ion-radio value="Courier"></ion-radio>
-    </ion-item>
-    <ion-item class="text-helvetica">
-      <ion-label>Helvetica</ion-label>
-      <ion-radio value="Helvetica"></ion-radio>
     </ion-item>
     <ion-item class="text-times-new-roman">
       <ion-label>Times New Roman</ion-label>
       <ion-radio value="Times New Roman"></ion-radio>
     </ion-item>
-    <ion-item class="text-verdana">
-      <ion-label>Verdana</ion-label>
-      <ion-radio value="Verdana"></ion-radio>
+    <ion-item class="text-monaco">
+      <ion-label>Monaco</ion-label>
+      <ion-radio value="Monaco"></ion-radio>
     </ion-item>
   </ion-list>

@@ -9,13 +9,10 @@ import firebase from 'firebase';
 })
 export class EditNewsPage {
   news: any;
-  fakeweight: string;
   image: any = null;
   
   constructor(public navCtrl: NavController, public navParams: NavParams ,private DbApiService: DbApiService, private loadingController: LoadingController, private toastController: ToastController) {
     this.news = navParams.data;
-    this.fakeweight = this.news.weight.toString();
-    console.log(this.fakeweight);
   }
 
   ionViewDidLoad() {
@@ -30,7 +27,6 @@ export class EditNewsPage {
   editNews(){
     console.log("imagen sin cambiar: " + this.image);
     this.news.time = new Date().getTime();
-    this.news.weight = parseInt(this.fakeweight);
     this.DbApiService.fireEditNews(this.news, this.image);
     let toast = this.toastController.create({
         message: 'Noticia editada con éxito',

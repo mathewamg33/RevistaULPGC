@@ -15,24 +15,24 @@ import { EditNewsPage } from "../edit-news/edit-news";
 export class AdminPage {
   news: any[];
   private allNews: any;
-  private sortByTime: any;
+  private sortBy: any;
   searchTerm: string = '';
   searchControl: FormControl;
   
   constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController, private toastController: ToastController) {
-    this.searchControl = new FormControl();
+    //this.searchControl = new FormControl();
   }
 
   ionViewDidLoad() {
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
-        this.sortByTime = _.chain(this.allNews).sortBy('title').value();
-        this.news = this.sortByTime;  
+        this.sortBy = _.chain(this.allNews).sortBy('time').value();
+        this.news = _.reverse(this.sortBy);  
       });
 
-      this.searchControl.valueChanges.debounceTime(100).subscribe(search => {
-            this.filterBySection();           
-      });
+      // this.searchControl.valueChanges.debounceTime(100).subscribe(search => {
+      //       this.filterBySection();           
+      // });
    
   }
   
@@ -61,16 +61,102 @@ export class AdminPage {
     }
   }
 
-  filterBySection() {
-    // Reset items back to all of the items
-    this.ionViewDidLoad();
-
-    if (this.searchTerm && this.searchTerm.trim() != 'Todos') {
-      this.news = this.news.filter((item) => {
-        return (item.section.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1);
-      })
-    }
+  sortTypePublished(){
+    this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        this.sortBy = _.chain(this.allNews).sortBy('published').value();
+        this.news = _.reverse(this.sortBy);  
+    });
   }
+
+  sortTypeDraft(){
+    this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        this.sortBy = _.chain(this.allNews).sortBy('published').value();
+        this.news = this.sortBy;  
+    });
+  }
+
+  sortTitleAsc(){
+    this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        this.sortBy = _.chain(this.allNews).sortBy('title').value();
+        this.news = _.reverse(this.sortBy);  
+    });
+  }
+
+  sortTitleDes(){
+    this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        this.sortBy = _.chain(this.allNews).sortBy('title').value();
+        this.news = this.sortBy;  
+    });
+
+  }
+  
+  sortSectionAsc(){
+    this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        this.sortBy = _.chain(this.allNews).sortBy('section').value();
+        this.news = _.reverse(this.sortBy);  
+    });
+
+  }
+  
+  sortSectionDes(){
+    this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        this.sortBy = _.chain(this.allNews).sortBy('section').value();
+        this.news = this.sortBy;  
+    });
+
+  }
+  
+  sortDateAsc(){
+    this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        this.sortBy = _.chain(this.allNews).sortBy('time').value();
+        this.news = _.reverse(this.sortBy);  
+    });
+
+  }
+  
+  sortDateDes(){
+    this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        this.sortBy = _.chain(this.allNews).sortBy('time').value();
+        this.news = this.sortBy;  
+    });
+
+  }
+  
+  sortAuthorAsc(){
+    this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        this.sortBy = _.chain(this.allNews).sortBy('author').value();
+        this.news = _.reverse(this.sortBy);  
+    });
+  }
+  
+  sortAuthorDes(){
+    this.DbApiService.getFireNews().subscribe(resp => {
+        this.allNews = resp;
+        this.sortBy = _.chain(this.allNews).sortBy('author').value();
+        this.news = this.sortBy;  
+    });
+
+  }
+
+  // filterBySection() {
+  //   // Reset items back to all of the items
+  //   this.ionViewDidLoad();
+
+  //   if (this.searchTerm && this.searchTerm.trim() != 'Todos') {
+  //     this.news = this.news.filter((item) => {
+  //       return (item.section.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1);
+  //     })
+  //   }
+  // }
   
   goCreateNews(){
     this.navCtrl.push(CreateNewsPage);
