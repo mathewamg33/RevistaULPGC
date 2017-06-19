@@ -25,7 +25,6 @@ export class HomePage {
       content: 'Por favor espera...'
     });
     loader.present().then(() => {
-      //this.DbApiService.fireLogin();
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.sortByTime = _.chain(this.allNews).sortBy('time').value();

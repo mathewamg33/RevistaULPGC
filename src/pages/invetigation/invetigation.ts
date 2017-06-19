@@ -25,7 +25,6 @@ export class InvetigationPage {
       content: 'Por favor espera...'
     });
     loader.present().then(() => {
-      //this.DbApiService.fireLogin();
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.invetigationNews = _.chain(this.allNews).filter(['section', 'Investigación']).value();

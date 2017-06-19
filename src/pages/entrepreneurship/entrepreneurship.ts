@@ -25,7 +25,6 @@ export class EntrepreneurshipPage {
       content: 'Por favor espera...'
     });
     loader.present().then(() => {
-      //this.DbApiService.fireLogin();
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.entrepreneurshipNews = _.chain(this.allNews).filter(['section', 'Emprendimiento']).value();

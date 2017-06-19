@@ -24,6 +24,7 @@ import { InternationalizationPage } from '../pages/internationalization/internat
 import { InvetigationPage } from "../pages/invetigation/invetigation";
 import { LoginPage } from "../pages/login/login";
 import { EditNewsPage } from "../pages/edit-news/edit-news";
+import { SearchPage } from "../pages/search/search";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA3GkJ2dwJeDbycrDPSoXUUxJf96s_4RUc",
@@ -53,7 +54,8 @@ export const firebaseConfig = {
     AdminPage,
     CreateNewsPage,
     EditNewsPage,
-    PopoverPage
+    PopoverPage,
+    SearchPage
 
   ],
   imports: [
@@ -81,7 +83,8 @@ export const firebaseConfig = {
     AdminPage,
     CreateNewsPage,
     EditNewsPage,
-    PopoverPage
+    PopoverPage,
+    SearchPage
     
   ],
   providers: [

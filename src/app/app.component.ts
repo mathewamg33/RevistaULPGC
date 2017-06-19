@@ -17,6 +17,7 @@ import { StudiesPage } from "../pages/studies/studies";
 import { InternationalizationPage } from "../pages/internationalization/internationalization";
 import { InvetigationPage } from "../pages/invetigation/invetigation";
 import { LoginPage } from "../pages/login/login";
+import { SearchPage } from "../pages/search/search";
 
 @Component({
   templateUrl: 'app.html'
@@ -40,7 +41,7 @@ export class MyApp {
       { title: 'Internacionalización', component: InternationalizationPage },
       { title: 'Investigación', component: InvetigationPage },
       { title: 'Sociedad', component: SocietyPage }
-      //orden alfabetico
+
     ];
 
   }
@@ -76,7 +77,7 @@ export class MyApp {
     this.nav.setRoot(HomePage);
   }
 
-  // openSearchPage(){
-  //   this.nav.setRoot(SearchPage);
-  // }
+  openSearchPage(){
+    this.nav.setRoot(SearchPage);
+  }
 }

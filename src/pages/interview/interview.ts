@@ -25,7 +25,6 @@ export class InterviewPage {
       content: 'Por favor espera...'
     });
     loader.present().then(() => {
-      //this.DbApiService.fireLogin();
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.interviewNews = _.chain(this.allNews).filter(['section', 'Entrevistas']).value();

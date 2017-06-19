@@ -25,7 +25,7 @@ export class CulturePage {
       content: 'Por favor espera...'
     });
     loader.present().then(() => {
-      //this.DbApiService.fireLogin();
+      
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.cultureNews = _.chain(this.allNews).filter(['section', 'Cultura']).value();

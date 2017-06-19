@@ -5,6 +5,9 @@
     </button>
     <ion-title>{{news.section}}</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="shareNews($event)">
+        <ion-icon name="share"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>

@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar color="ulpgc">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Buscador</ion-title>
+    </ion-navbar>
+    <ion-toolbar color="ulpgc">
+    <ion-searchbar (ionInput)="getItems($event)" placeholder="Buscar por título"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ng-container *ngFor = "let n of news">
+      <ion-item text-wrap *ngIf= "coverPage != n" (click)="showNews($event, n)">
+          <p>{{ n.section }}</p>
+          <h2 class="newsTitle">{{n.title}}</h2>
+          <div class="separator"></div>
+          <p>{{n.author }}</p>
+          <ion-thumbnail item-right *ngIf="n.image">
+            <img src="{{n.image}}">
+          </ion-thumbnail>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>
+
+

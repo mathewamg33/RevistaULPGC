@@ -25,7 +25,6 @@ export class StudiesPage {
       content: 'Por favor espera...'
     });
     loader.present().then(() => {
-      //this.DbApiService.fireLogin();
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.studiesNews = _.chain(this.allNews).filter(['section', 'Estudios']).value();

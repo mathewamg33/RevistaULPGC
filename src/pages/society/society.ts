@@ -25,7 +25,6 @@ export class SocietyPage {
       content: 'Por favor espera...'
     });
     loader.present().then(() => {
-      //this.DbApiService.fireLogin();
       this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.societyNews = _.chain(this.allNews).filter(['section', 'Sociedad']).value();
