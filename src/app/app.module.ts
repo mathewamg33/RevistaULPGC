@@ -25,6 +25,28 @@ import { InvetigationPage } from "../pages/invetigation/invetigation";
 import { LoginPage } from "../pages/login/login";
 import { EditNewsPage } from "../pages/edit-news/edit-news";
 import { SearchPage } from "../pages/search/search";
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { HttpModule } from '@angular/http'
+
+const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': 'e029b6de'
+  },
+  'push': {
+    'sender_id': '1094799334255',
+    'pluginConfig': {
+      'ios': {
+        'badge': true,
+        'sound': true
+      },
+      'android': {
+        'iconColor': '#343434',
+        'forceShow': true
+      }
+    }
+  }
+};
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA3GkJ2dwJeDbycrDPSoXUUxJf96s_4RUc",
@@ -63,7 +85,9 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
-    AngularFireAuthModule // imports firebase/auth, only needed for auth features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    CloudModule.forRoot(cloudSettings),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -91,7 +115,8 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}, 
-    DbApiService
+    DbApiService,
+    SocialSharing
   ]
 })
 export class AppModule {}

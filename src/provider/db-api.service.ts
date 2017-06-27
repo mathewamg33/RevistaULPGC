@@ -5,6 +5,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs/Rx';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
+import { Http, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class DbApiService {
@@ -12,7 +14,7 @@ export class DbApiService {
   auth: any;
   allNews: any;
 
-  constructor(private af: AngularFireDatabase, public afAuth: AngularFireAuth, private platform: Platform) {
+  constructor(private af: AngularFireDatabase, public afAuth: AngularFireAuth, private platform: Platform, public http: Http) {
   }
 
 
@@ -66,7 +68,22 @@ export class DbApiService {
             coverPage: news.coverPage,
             published: news.published, 
             image: ""
-        });
+        })
+          if(news.published == true){
+            let body = {
+              to : "ei7HRMoE43U:APA91bG7wEAu4Cu3RXijEfvqryTZey2mokiOTvJdc-CkXz1MA8QnCy6GqeBLuMt8MK2hVDXT8uRcDllqaKfWlt8mYVGrvFeyWaGCdlPZXZcSnZ9xx7WD3dE9Lx69j01QCYYh0t7DYW1g",
+              notification: {
+                title: news.title
+              }
+            }
+            let headers = new Headers({'Content-Type': ' application/json'});
+
+              headers.append('Authorization', 'key=' + 'AIzaSyA1OTMjOG4Jg8E-0sZ2loxBsDy2TFbyApA');  
+            console.log("headers:" + headers[0], headers[1]);
+            console.log(JSON.stringify(body));            
+            this.http.post('https://fcm.googleapis.com/fcm/send', JSON.stringify(body), {headers: headers}).map(res => res.json());
+           }
+        
     }else{
       let storageRef = firebase.storage().ref();
       let imageName = image.name;
@@ -186,6 +203,14 @@ export class DbApiService {
 
   fireDeleteNews(newsId){
     this.news.remove(newsId);
+  }
+
+
+  sendNotificationToUser(user, message) {
+    firebase.database().ref('notifications/').push({
+      title: user,
+      section: message 
+    });
   }
 }
 

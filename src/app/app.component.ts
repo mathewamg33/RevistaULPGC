@@ -19,6 +19,7 @@ import { InvetigationPage } from "../pages/invetigation/invetigation";
 import { LoginPage } from "../pages/login/login";
 import { SearchPage } from "../pages/search/search";
 
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -80,4 +81,5 @@ export class MyApp {
   openSearchPage(){
     this.nav.setRoot(SearchPage);
   }
+
 }
