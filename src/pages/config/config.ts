@@ -30,28 +30,25 @@ export class ConfigPage {
   changeNotifications(val) {
       if (val===true){
         this.registerToken();
-        this.getNotifications();
+        //FirebaseMessaging.getInstance().subscribeToTopic("news");
       }
       else{
         this.push.unregister();
+        
       }
 	}
 
   registerToken(){
     this.push.register().then((t: PushToken) => {
+      this.DbApiService.registerTokenToFB(t.token);
       return this.push.saveToken(t,{
-        ignore_user: true
+        //ignore_user: true
       });
     }).then((t: PushToken) => {
       console.log('Token saved:', t.token);
     });
   }
   
-  getNotifications(){
-    this.push.rx.notification()
-    .subscribe((msg) => {
-      this.navCtrl.push(ShowNewsPage, msg.payload);
-    });
-  }
+  
 }
 

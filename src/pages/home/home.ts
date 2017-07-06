@@ -31,7 +31,7 @@ export class HomePage {
         this.importantNews = _.chain(this.allNews).filter(['coverPage', true]).value();
         this.published = _.chain(this.sortByTime).filter(['published', true]).value();
         this.coverPage = this.importantNews[0];
-        this.news = this.published;
+        this.news = _.reverse(this.published);
         loader.dismiss();
       });
     });

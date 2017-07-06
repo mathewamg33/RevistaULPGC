@@ -19,6 +19,9 @@ import { InvetigationPage } from "../pages/invetigation/invetigation";
 import { LoginPage } from "../pages/login/login";
 import { SearchPage } from "../pages/search/search";
 
+import { Push, PushToken } from '@ionic/cloud-angular';
+import { ShowNewsPage } from "../pages/show-news/show-news";
+
 
 @Component({
   templateUrl: 'app.html'
@@ -30,7 +33,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private DbApiService: DbApiService) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private DbApiService: DbApiService, public push: Push) {
     this.initializeApp();
 
     this.pages = [
@@ -51,9 +54,10 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
+      this.statusBar.backgroundColorByName("black");
       this.splashScreen.hide();
     });
+    // this.getNotifications();
   }
 
   openPage(page) {
@@ -81,5 +85,12 @@ export class MyApp {
   openSearchPage(){
     this.nav.setRoot(SearchPage);
   }
+
+  // getNotifications(){
+  //   this.push.rx.notification()
+  //   .subscribe((msg) => {
+  //     this.nav.push(ShowNewsPage, msg.payload);
+  //   });
+  // }
 
 }

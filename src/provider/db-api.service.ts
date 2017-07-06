@@ -1,12 +1,13 @@
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { FirebaseListObservable, AngularFireDatabase,  } from 'angularfire2/database';
+import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
 import { Platform } from 'ionic-angular';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs/Rx';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
+import * as _ from 'lodash';
 
 @Injectable()
 export class DbApiService {
@@ -23,14 +24,14 @@ export class DbApiService {
     return this.news;
   }
 
-  cover(news){
-    if(news.coverPage === true){
+  cover(news) {
+    if (news.coverPage === true) {
       this.getFireNews().take(1).subscribe(resp => {
         this.allNews = resp;
-        for (let n of this.allNews){
-            firebase.database().ref('news/'+ n.$key).update({
-              coverPage: false
-            });
+        for (let n of this.allNews) {
+          firebase.database().ref('news/' + n.$key).update({
+            coverPage: false
+          });
         }
       });
     }
@@ -40,7 +41,7 @@ export class DbApiService {
     return Observable.create(observer => {
       this.afAuth.auth.signInWithEmailAndPassword(email, password).then((authData) => {
         observer.next(authData);
-      }).catch(function(error) {
+      }).catch(function (error) {
         var errorCode = error.message;
         var errorMessage = error.message;
         if (errorCode === 'auth/wrong-password') {
@@ -55,162 +56,289 @@ export class DbApiService {
   fireLogout() {
     this.afAuth.auth.signOut();
   }
-  
+
   fireCreateNews(news, image) {
     this.cover(news);
-    if(image == null){
+    if (image == null) {
       firebase.database().ref('news/').push({
-            title: news.title, 
-            section: news.section, 
-            author: news.author, 
-            content: news.content, 
-            time: news.time,  
-            coverPage: news.coverPage,
-            published: news.published, 
-            image: ""
-        })
-          if(news.published == true){
-            let body = {
-              to : "ei7HRMoE43U:APA91bG7wEAu4Cu3RXijEfvqryTZey2mokiOTvJdc-CkXz1MA8QnCy6GqeBLuMt8MK2hVDXT8uRcDllqaKfWlt8mYVGrvFeyWaGCdlPZXZcSnZ9xx7WD3dE9Lx69j01QCYYh0t7DYW1g",
-              notification: {
-                title: news.title
-              }
-            }
-            let headers = new Headers({'Content-Type': ' application/json'});
+        title: news.title,
+        section: news.section,
+        author: news.author,
+        content: news.content,
+        time: news.time,
+        coverPage: news.coverPage,
+        published: news.published,
+        image: ""
+      }).then(() => {
 
-              headers.append('Authorization', 'key=' + 'AIzaSyA1OTMjOG4Jg8E-0sZ2loxBsDy2TFbyApA');  
-            console.log("headers:" + headers[0], headers[1]);
-            console.log(JSON.stringify(body));            
-            this.http.post('https://fcm.googleapis.com/fcm/send', JSON.stringify(body), {headers: headers}).map(res => res.json());
-           }
-        
-    }else{
+        if (news.published == true) {
+          let tokensList = [];
+          this.af.list('/tokens')
+            .subscribe(tokens => {
+              _.forEach(tokens, (value, key) => {
+                tokensList.push(value.$value);
+              });
+            });
+          _.forEach(tokensList, token => {
+            let url = 'https://fcm.googleapis.com/fcm/send';
+            let body =
+              {
+                "notification": {
+                  "title": "RevistaULPGC",
+                  "body": news.title
+
+
+                },
+                "to": token
+              };
+
+            let headers: Headers = new Headers({
+              'Content-Type': 'application/json',
+              'Authorization': 'key=' + 'AIzaSyA1OTMjOG4Jg8E-0sZ2loxBsDy2TFbyApA'
+            });
+            let options = new RequestOptions({ headers: headers });
+
+            console.log(JSON.stringify(headers));
+
+            this.http.post(url, body, options).map(response => {
+              return response;
+            }).subscribe(data => {
+              console.log(data);
+            });
+          });
+        }
+      });
+    } else {
+      let http = this.http;
       let storageRef = firebase.storage().ref();
       let imageName = image.name;
       let uploadTask = storageRef.child('news/' + imageName).put(image);
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-      function (snapshot) {
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
-            break;
-          case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
-            break;
-        }
-      }, function (error) {
-        switch (error.message) {
-          case 'storage/unauthorized':
-            // User doesn't have permission to access the object
-            break;
-          case 'storage/canceled':
-            // User canceled the upload
-            break;
-          case 'storage/unknown':
-            // Unknown error occurred, inspect error.serverResponse
-            break;
-        }
-      }, function () {
-        // Upload completed successfully, now we can get the download URL
-        let imageUrl = uploadTask.snapshot.downloadURL;
-        //console.log("downloadURL: " + downloadURL);
-        firebase.database().ref('news/').push({
+        function (snapshot) {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }
+        }, function (error) {
+          switch (error.message) {
+            case 'storage/unauthorized':
+              // User doesn't have permission to access the object
+              break;
+            case 'storage/canceled':
+              // User canceled the upload
+              break;
+            case 'storage/unknown':
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        }, function () {
+          // Upload completed successfully, now we can get the download URL
+          let imageUrl = uploadTask.snapshot.downloadURL;
+          //console.log("downloadURL: " + downloadURL);
+          firebase.database().ref('news/').push({
             title: news.title,
             section: news.section,
             author: news.author,
             content: news.content,
             time: news.time,
             coverPage: news.coverPage,
-            published: news.published, 
+            published: news.published,
             image: imageUrl
+          }).then(() => {
+
+            if (news.published == true) {
+              let tokensList = [];
+              this.af.list('/tokens')
+                .subscribe(tokens => {
+                  _.forEach(tokens, (value, key) => {
+                    tokensList.push(value.$value);
+                  });
+                });
+              _.forEach(tokensList, token => {
+                let url = 'https://fcm.googleapis.com/fcm/send';
+
+                let body =
+                  {
+                    "notification": {
+                      "title": "RevistaULPGC",
+                      "body": news.title
+                    },
+                    "to": token
+                  };
+
+                let headers: Headers = new Headers({
+                  'Content-Type': 'application/json',
+                  'Authorization': 'key=' + 'AIzaSyA1OTMjOG4Jg8E-0sZ2loxBsDy2TFbyApA'
+                });
+                let options = new RequestOptions({ headers: headers });
+
+                http.post(url, body, options).map(response => {
+                  return response;
+                }).subscribe(data => {
+                  console.log(data);
+                });
+              });
+            }
+          });
         });
-      });
     }
   }
 
 
   fireEditNews(news, image) {
     this.cover(news);
-    if(image == null){
-      firebase.database().ref('news/'+ news.$key).update({
-            title: news.title,
-            section: news.section,
-            author: news.author,
-            content: news.content,
-            time: news.time,
-            coverPage: news.coverPage,
-            published: news.published  
-      });
-    }else{
+    if (image == null) {
+      firebase.database().ref('news/' + news.$key).update({
+        title: news.title,
+        section: news.section,
+        author: news.author,
+        content: news.content,
+        time: news.time,
+        coverPage: news.coverPage,
+        published: news.published
+      }).then(()=> {
+          if (news.published == true) {
+            let tokensList = [];
+            this.af.list('/tokens')
+              .subscribe(tokens => {
+                _.forEach(tokens, (value, key) => {
+                  tokensList.push(value.$value);
+                });
+              });
+            _.forEach(tokensList, token => {
+              let url = 'https://fcm.googleapis.com/fcm/send';
 
+              let body =
+                {
+                  "notification": {
+                    "title": "RevistaULPGC",
+                    "body": news.title
+                    
+                  },
+                  "to": token
+                };
+
+              let headers: Headers = new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': 'key=' + 'AIzaSyA1OTMjOG4Jg8E-0sZ2loxBsDy2TFbyApA'
+              });
+              let options = new RequestOptions({ headers: headers });
+
+              this.http.post(url, body, options).map(response => {
+                return response;
+              }).subscribe(data => {
+                console.log(data);
+              });
+            });
+          }
+        });
+    } else {
+      let http = this.http;
       let storageRef = firebase.storage().ref();
       let imageName = image.name;
-      let uploadTask = storageRef.child('news/'+ news.$key + imageName).put(image);
+      let uploadTask = storageRef.child('news/' + news.$key + imageName).put(image);
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-      function (snapshot) {
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
-            break;
-          case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
-            break;
-        }
-      }, function (error) {
-        switch (error.message) {
-          case 'storage/unauthorized':
-            // User doesn't have permission to access the object
-            break;
-          case 'storage/canceled':
-            // User canceled the upload
-            break;
-          case 'storage/unknown':
-            // Unknown error occurred, inspect error.serverResponse
-            break;
-        }
-      }, function () {
-        // Upload completed successfully, now we can get the download URL
-        let imageUrl = uploadTask.snapshot.downloadURL;
-        //console.log("downloadURL: " + downloadURL);
-        console.log(news.$key);
-        console.log(imageUrl);
-        firebase.database().ref('news/'+ news.$key).update({
+        function (snapshot) {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }
+        }, function (error) {
+          switch (error.message) {
+            case 'storage/unauthorized':
+              // User doesn't have permission to access the object
+              break;
+            case 'storage/canceled':
+              // User canceled the upload
+              break;
+            case 'storage/unknown':
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        }, function () {
+          // Upload completed successfully, now we can get the download URL
+          let imageUrl = uploadTask.snapshot.downloadURL;
+          //console.log("downloadURL: " + downloadURL);
+          console.log(news.$key);
+          console.log(imageUrl);
+          firebase.database().ref('news/' + news.$key).update({
             title: news.title,
             section: news.section,
             author: news.author,
             content: news.content,
             time: news.time,
             coverPage: news.coverPage,
-            published: news.published,            
+            published: news.published,
             image: imageUrl
+          }).then(() => {
+
+            if (news.published == true) {
+              let tokensList = [];
+              this.af.list('/tokens')
+                .subscribe(tokens => {
+                  _.forEach(tokens, (value, key) => {
+                    tokensList.push(value.$value);
+                  });
+                });
+              _.forEach(tokensList, token => {
+                let url = 'https://fcm.googleapis.com/fcm/send';
+
+                let body =
+                  {
+                    "notification": {
+                      "title": "RevistaULPGC",
+                      "body": news.title
+                    },
+                    "to": token
+                  };
+
+                let headers: Headers = new Headers({
+                  'Content-Type': 'application/json',
+                  'Authorization': 'key=' + 'AIzaSyA1OTMjOG4Jg8E-0sZ2loxBsDy2TFbyApA'
+                });
+                let options = new RequestOptions({ headers: headers });
+
+                http.post(url, body, options).map(response => {
+                  return response;
+                }).subscribe(data => {
+                  console.log(data);
+                });
+              });
+            }
+          });
         });
-      });
     }
   }
 
-  // firePublishNews(newsId, published){
-  //    firebase.database().ref('news/'+ newsId).update({
-  //           published: published,
-  //    })
-  // }
 
-
-  fireDeleteNews(newsId){
+  fireDeleteNews(newsId) {
     this.news.remove(newsId);
   }
 
 
-  sendNotificationToUser(user, message) {
-    firebase.database().ref('notifications/').push({
-      title: user,
-      section: message 
-    });
+  registerTokenToFB(token) {
+    console.log(token);
+    let aux = {};
+    aux[token] = token;
+    firebase.database().ref('tokens/').update(aux);
+
   }
+
 }
+
+
 
