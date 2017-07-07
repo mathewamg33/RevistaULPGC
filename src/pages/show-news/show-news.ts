@@ -19,7 +19,6 @@ export class ShowNewsPage {
   relatedNews: any[];
   private allNews: any;
   private sectionNews: any;  
-  private sortByWeight: any;
   
   
 
@@ -34,8 +33,7 @@ export class ShowNewsPage {
     this.DbApiService.getFireNews().subscribe(resp => {
         this.allNews = resp;
         this.sectionNews = _.chain(this.allNews).filter(['section',  this.news.section]).value();
-        this.sortByWeight = _.chain(this.sectionNews).sortBy('weight').value();
-        this.relatedNews = this.sortByWeight.slice(0, 4);
+        this.relatedNews = this.sectionNews.slice(0, 4);
     });
     let image = new Image();
     image.src = this.img;

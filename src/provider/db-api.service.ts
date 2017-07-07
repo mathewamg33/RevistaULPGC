@@ -110,6 +110,7 @@ export class DbApiService {
       });
     } else {
       let http = this.http;
+      let af = this.af;
       let storageRef = firebase.storage().ref();
       let imageName = image.name;
       let uploadTask = storageRef.child('news/' + imageName).put(image);
@@ -155,7 +156,8 @@ export class DbApiService {
 
             if (news.published == true) {
               let tokensList = [];
-              this.af.list('/tokens')
+              
+              af.list('/tokens')
                 .subscribe(tokens => {
                   _.forEach(tokens, (value, key) => {
                     tokensList.push(value.$value);
@@ -241,6 +243,7 @@ export class DbApiService {
         });
     } else {
       let http = this.http;
+      let af = this.af;
       let storageRef = firebase.storage().ref();
       let imageName = image.name;
       let uploadTask = storageRef.child('news/' + news.$key + imageName).put(image);
@@ -288,7 +291,7 @@ export class DbApiService {
 
             if (news.published == true) {
               let tokensList = [];
-              this.af.list('/tokens')
+              af.list('/tokens')
                 .subscribe(tokens => {
                   _.forEach(tokens, (value, key) => {
                     tokensList.push(value.$value);
