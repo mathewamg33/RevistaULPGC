@@ -17,7 +17,7 @@ export class AdminPage {
   private allNews: any;
   private sortBy: any;
   searchTerm: string = '';
-  searchControl: FormControl;
+  // searchControl: FormControl;
   
   constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController, private toastController: ToastController, private alertCtrl: AlertController) {
     //this.searchControl = new FormControl();
