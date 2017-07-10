@@ -6,6 +6,7 @@ import {
   PushToken
 } from '@ionic/cloud-angular';
 import { ShowNewsPage } from "../show-news/show-news";
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-config',
@@ -14,8 +15,10 @@ import { ShowNewsPage } from "../show-news/show-news";
 export class ConfigPage {
   notifications: boolean;
 
-  constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController, public push: Push) {
-    this.notifications = false;
+  constructor(public navCtrl: NavController, private DbApiService: DbApiService, private storage: Storage, private loadingController: LoadingController, public push: Push) {
+    storage.get('notification').then((value)=>{
+      this.notifications = value;
+    });
   }
 
   ionViewDidLoad() {
@@ -30,9 +33,11 @@ export class ConfigPage {
   changeNotifications(val) {
       if (val===true){
         this.registerToken();
+        this.storage.set('notification', true);
       }
       else{
         this.push.unregister();
+        this.storage.set('notification', false);
         
       }
 	}

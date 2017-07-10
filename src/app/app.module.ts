@@ -30,6 +30,7 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { HttpModule } from '@angular/http'
 import "froala-editor/js/froala_editor.pkgd.min.js";
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { IonicStorageModule } from '@ionic/storage';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -91,7 +92,8 @@ export const firebaseConfig = {
     CloudModule.forRoot(cloudSettings),
     HttpModule,
     FroalaEditorModule.forRoot(), 
-    FroalaViewModule.forRoot() 
+    FroalaViewModule.forRoot(),
+    IonicStorageModule.forRoot() 
   ],
   bootstrap: [IonicApp],
   entryComponents: [
