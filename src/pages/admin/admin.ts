@@ -1,7 +1,7 @@
 import { HomePage } from './../home/home';
 import { DbApiService } from './../../provider/db-api.service';
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ToastController} from 'ionic-angular';
+import { NavController, LoadingController, ToastController, AlertController} from 'ionic-angular';
 import * as _ from 'lodash';
 import { FormControl } from "@angular/forms";
 import 'rxjs/add/operator/debounceTime';
@@ -19,7 +19,7 @@ export class AdminPage {
   searchTerm: string = '';
   searchControl: FormControl;
   
-  constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController, private toastController: ToastController) {
+  constructor(public navCtrl: NavController, private DbApiService: DbApiService, private loadingController: LoadingController, private toastController: ToastController, private alertCtrl: AlertController) {
     //this.searchControl = new FormControl();
   }
 
@@ -167,8 +167,26 @@ export class AdminPage {
   }
 
   deleteNews(news){
-    console.log(news.$key);
-    this.DbApiService.fireDeleteNews(news.$key);
+    let alert = this.alertCtrl.create({
+      title: 'Confirmar acción',
+      message: '¿Está seguro que desea eliminar esta noticia?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            this.DbApiService.fireDeleteNews(news.$key);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }
 

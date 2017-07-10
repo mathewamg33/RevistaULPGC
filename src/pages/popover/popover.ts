@@ -8,6 +8,7 @@ import { NavParams } from 'ionic-angular';
 })
 export class PopoverPage {
   textEle: any;
+  contentEle: any;
   text: any;
   fontFamily;
 
@@ -17,25 +18,29 @@ export class PopoverPage {
 
   ngOnInit() {
     if (this.navParams.data) {
+      this.contentEle = this.navParams.data.contentEle;
       this.textEle = this.navParams.data.textEle;
-
+      console.log(this.textEle[0]);
       this.setFontFamily();
     }
   }
 
 
   setFontFamily() {
-    if (this.textEle.style.fontFamily) {
-      this.fontFamily = this.textEle.style.fontFamily.replace(/'/g, "");
+    if (this.contentEle.style.fontFamily) {
+      this.fontFamily = this.contentEle.style.fontFamily.replace(/'/g, "");
     }
   }
 
   changeFontSize() {
     console.log(this.text);
-    this.textEle.style.fontSize = this.text + 'px';
+    console.log("esto es: " + this.textEle[0] + " segundo: " + this.textEle[1]);
+    for (let p of this.textEle){
+      p.style.fontSize = this.text + 'px';
+    }
   }
 
   changeFontFamily() {
-    if (this.fontFamily) this.textEle.style.fontFamily = this.fontFamily;
+    if (this.fontFamily) this.contentEle.style.fontFamily = this.fontFamily;
   }
 }

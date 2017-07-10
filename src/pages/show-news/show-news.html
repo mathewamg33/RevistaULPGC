@@ -26,8 +26,8 @@
       <div class="data">
         <p>{{ news.author }} | {{ news.time | date:'HH:mm' }} - {{ news.time | date:'dd/MM/yy' }}</p>
       </div>
-      <div class="newsContent">
-        <p #popoverText> {{ news.content }} </p>
+      <div #popoverContent class="newsContent">
+        <div #popoverText [innerHTML]="news.content"></div>
       </div>
       <div class="separatorRelatedNews">
         <h2 class="relatedNews">Noticias Relacionadas</h2>

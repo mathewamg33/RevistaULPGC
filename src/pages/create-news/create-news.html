@@ -5,7 +5,7 @@
         <ion-title text-center class="nav-title">Crear Noticia</ion-title>
       </ion-col>
       <ion-col col-1 offset-1>
-        <img class="logoUlpgc" src="https://firebasestorage.googleapis.com/v0/b/revistauplgc.appspot.com/o/logo.png?alt=media&token=7692f24c-ecf7-4af7-afca-fb87b77c8f2e" alt="logo-ulpgc">
+        <img class="logoUlpgc" src="/assets/images/logo.png" alt="logo-ulpgc">
       </ion-col>
     </ion-row>
   </ion-navbar>
@@ -51,10 +51,10 @@
     </ion-row>
     <ion-row>
       <ion-col> 
-        <ion-item>
+        <ion-item no-lines>
           <ion-label fixed>Contenido</ion-label>
-          <ion-textarea id="createNews" [(ngModel)]="news.content" name="content" required></ion-textarea>
         </ion-item>
+        <div [froalaEditor] [(ngModel)]="news.content" name="content">Hello, Froala!</div>
       </ion-col>
     </ion-row>
     <ion-row>

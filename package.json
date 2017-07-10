@@ -27,6 +27,7 @@
     "@ionic-native/status-bar": "3.6.1",
     "@ionic/cloud-angular": "^0.12.0",
     "@ionic/storage": "2.0.1",
+    "angular-froala-wysiwyg": "^1.0.0",
     "angularfire2": "^4.0.0-rc.0",
     "firebase": "^3.9.0",
     "ionic-angular": "3.1.1",
@@ -49,5 +50,8 @@
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [],
-  "description": "RevistaApp: An Ionic project"
+  "description": "RevistaApp: An Ionic project",
+  "config": {
+    "ionic_copy": "./config/copy.config.js"
+  }
 }

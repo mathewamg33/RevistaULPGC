@@ -12,9 +12,9 @@ import { PopoverPage } from "../popover/popover";
 })
 export class ShowNewsPage {
   @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
-
+  @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   news: any;
-  base64img: any;
+  // base64img: any;
   img: any;
   relatedNews: any[];
   private allNews: any;
@@ -35,9 +35,9 @@ export class ShowNewsPage {
         this.sectionNews = _.chain(this.allNews).filter(['section',  this.news.section]).value();
         this.relatedNews = this.sectionNews.slice(0, 4);
     });
-    let image = new Image();
-    image.src = this.img;
-    this.base64img = this.getBase64Image(image);
+    // let image = new Image();
+    // image.src = this.img;
+    // this.base64img = this.getBase64Image(image);
     
   }
 
@@ -48,25 +48,28 @@ export class ShowNewsPage {
   presentPopover(ev) {
 
     let popover = this.popoverCtrl.create(PopoverPage, {
-      textEle: this.text.nativeElement
+      textEle: this.text.nativeElement.querySelectorAll('p'),
+      contentEle: this.content.nativeElement
     });
 
     popover.present({
       ev: ev
     });
   }
+  
+  // TODO - Enviar imagenes con el titulo de la noticias, en compartir.
 
-  getBase64Image(img) {
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
+  // getBase64Image(img) {
+  //   var canvas = document.createElement("canvas");
+  //   canvas.width = img.width;
+  //   canvas.height = img.height;
 
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-    var dataURL = canvas.toDataURL("image/png");
+  //   var ctx = canvas.getContext("2d");
+  //   ctx.drawImage(img, 0, 0);
+  //   var dataURL = canvas.toDataURL("image/png");
 
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-  }
+  //   return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+  // }
 
   
   share(){

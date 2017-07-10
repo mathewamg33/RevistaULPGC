@@ -25,17 +25,52 @@ export class EditNewsPage {
   }
 
   editNews(){
-    console.log("imagen sin cambiar: " + this.image);
     this.news.time = new Date().getTime();
-    this.DbApiService.fireEditNews(this.news, this.image);
-    let toast = this.toastController.create({
+    if(this.news.title ==""){
+      let toast = this.toastController.create({
+        message: 'Introduzca un título',
+        position: 'top',
+        duration: 5000
+      });
+      toast.present();
+    }else if(this.news.author ==""){
+      let toast = this.toastController.create({
+        message: 'Introduzca un autor',
+        position: 'top',
+        duration: 5000
+      });
+      toast.present();
+    }else if(this.news.content ==""){
+      let toast = this.toastController.create({
+        message: 'Introduzca contenido',
+        position: 'top',
+        duration: 5000
+      });
+      toast.present();
+    }else if(this.news.section == ""){
+      let toast = this.toastController.create({
+        message: 'Introduzca una sección',
+        position: 'top',
+        duration: 5000
+      });
+      toast.present();
+    }else if( this.image == null || this.image.size <= 1000000 ){
+      this.DbApiService.fireEditNews(this.news, this.image);
+      let toast = this.toastController.create({
         message: 'Noticia editada con éxito',
         position: 'top',
         duration: 5000
-    });
-    toast.present();
-    this.navCtrl.pop();
+      });
+      toast.present();
+      this.navCtrl.pop();
+    }else{
+      let toast = this.toastController.create({
+        message: 'La imagen seleccionada tiene un tamaño superior a 1Mb, seleccione otra imagen por favor',
+        position: 'top',
+        duration: 5000
+      });
+      toast.present();
+    }
   }
-
 }
 

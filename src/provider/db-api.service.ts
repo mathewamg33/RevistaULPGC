@@ -122,23 +122,13 @@ export class DbApiService {
           switch (snapshot.state) {
             case firebase.storage.TaskState.PAUSED: // or 'paused'
               console.log('Upload is paused');
-              break;
+              //break;
             case firebase.storage.TaskState.RUNNING: // or 'running'
               console.log('Upload is running');
-              break;
+              //break;
           }
         }, function (error) {
-          switch (error.message) {
-            case 'storage/unauthorized':
-              // User doesn't have permission to access the object
-              break;
-            case 'storage/canceled':
-              // User canceled the upload
-              break;
-            case 'storage/unknown':
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-          }
+          console.log("error");
         }, function () {
           // Upload completed successfully, now we can get the download URL
           let imageUrl = uploadTask.snapshot.downloadURL;
@@ -246,7 +236,7 @@ export class DbApiService {
       let af = this.af;
       let storageRef = firebase.storage().ref();
       let imageName = image.name;
-      let uploadTask = storageRef.child('news/' + news.$key + imageName).put(image);
+      let uploadTask = storageRef.child('news/' + news.$key + "-" + imageName).put(image);
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
         function (snapshot) {
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -261,17 +251,7 @@ export class DbApiService {
               break;
           }
         }, function (error) {
-          switch (error.message) {
-            case 'storage/unauthorized':
-              // User doesn't have permission to access the object
-              break;
-            case 'storage/canceled':
-              // User canceled the upload
-              break;
-            case 'storage/unknown':
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-          }
+            console.log("error");
         }, function () {
           // Upload completed successfully, now we can get the download URL
           let imageUrl = uploadTask.snapshot.downloadURL;
@@ -334,7 +314,6 @@ export class DbApiService {
 
 
   registerTokenToFB(token) {
-    console.log(token);
     let aux = {};
     aux[token] = token;
     firebase.database().ref('tokens/').update(aux);

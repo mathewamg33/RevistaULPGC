@@ -28,6 +28,8 @@ import { SearchPage } from "../pages/search/search";
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { HttpModule } from '@angular/http'
+import "froala-editor/js/froala_editor.pkgd.min.js";
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -87,7 +89,9 @@ export const firebaseConfig = {
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     CloudModule.forRoot(cloudSettings),
-    HttpModule
+    HttpModule,
+    FroalaEditorModule.forRoot(), 
+    FroalaViewModule.forRoot() 
   ],
   bootstrap: [IonicApp],
   entryComponents: [
